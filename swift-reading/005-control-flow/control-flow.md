@@ -5,7 +5,7 @@
 - [For loop](#for-loop)
 - [For-In Loops](#for-in-loops)
 - [While loops](#while-loops)
-- [Accessing and Modifying a Dictionary](#accessing-and-modifying-a-dictionary)
+- [Conditional Statements](#conditional-statements)
 - [Iterating Over a Dictionary](#iterating-over-a-dictionary)
 
 ### **Control Flow**
@@ -152,4 +152,78 @@ repeat {
     statements
 } while condition
 
+```
+
+---
+
+### **Conditional Statements**
+
+- to execute different pieces of code based on certain conditions.
+
+- Two ways to add conditional branches to your code:
+
+  - if statement and
+
+  - the switch statement.
+
+## If
+
+- In its simplest form,
+- the if statement has a single if condition.
+- It executes a set of statements only if that condition is true.
+
+```swift
+var temperatureInFahrenheit = 30
+if temperatureInFahrenheit <= 32 {
+    print("It's very cold. Consider wearing a scarf.")
+}
+```
+
+- The if statement can provide an alternative set of statements, known as an else clause.
+
+- for situations when the if condition is false.
+
+```swift
+
+temperatureInFahrenheit = 40
+if temperatureInFahrenheit <= 32 {
+    print("It's very cold. Consider wearing a scarf.")
+} else {
+    print("It's not that cold. Wear a t-shirt.")
+}
+```
+
+- chain multiple if statements together to consider additional clauses.
+
+```swift
+temperatureInFahrenheit = 90
+if temperatureInFahrenheit <= 32 {
+    print("It's very cold. Consider wearing a scarf.")
+} else if temperatureInFahrenheit >= 86 {
+    print("It's really warm. Don't forget to wear sunscreen.")
+} else {
+    print("It's not that cold. Wear a t-shirt.")
+}
+```
+
+---
+
+## Switch
+
+- considers a value and compares it against several possible matching patterns.
+
+- then executes an appropriate block of code, based on the first pattern that matches successfully.
+
+- a switch statement compares a value against one or more values of the same type.
+
+```swift
+switch some value to consider {
+case value 1:
+    respond to value 1
+case value 2,
+     value 3:
+    respond to value 2 or 3
+default:
+    otherwise, do something else
+}
 ```
