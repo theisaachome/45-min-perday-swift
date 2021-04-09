@@ -6,6 +6,10 @@
 - [For-In Loops](#for-in-loops)
 - [While loops](#while-loops)
 - [Conditional Statements](#conditional-statements)
+  - [If](#if)
+  - [Switch](#switch)
+  - [Compound case](#compound-case)
+  - [Interval Matching](#interval-matching)
 - [Iterating Over a Dictionary](#iterating-over-a-dictionary)
 
 ### **Control Flow**
@@ -225,5 +229,141 @@ case value 2,
     respond to value 2 or 3
 default:
     otherwise, do something else
+}
+```
+
+- consists of multiple possible cases, each of which begins with the case keyword.
+- if no case matched there is default case to cover any values.
+
+```swift
+let someCharacter:Character = "z"
+
+switch someCharacter {
+case "a":
+    print("the first letter of alphabet")
+case "z":
+    print("The Last Letter of alphabet.")
+default:
+    print("Other Character.")
+}
+
+```
+
+- the entire switch statement finishes its execution as soon as the first matching switch case is completed, without requiring an explicit break statement.
+
+### Compound case
+
+- To make a switch with a single case that matches both "a" and "A".
+
+- combine the two values into a compound case, separating the values with commas.
+
+```swift
+
+let someCharacter: Character = "e"
+switch someCharacter {
+case "a", "e", "i", "o", "u":
+    print("\(someCharacter) is a vowel")
+case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+     "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+    print("\(someCharacter) is a consonant")
+default:
+    print("\(someCharacter) isn't a vowel or a consonant")
+}
+
+
+```
+
+### Interval Matching
+
+- Values in switch cases can be checked for their inclusion in an interval.
+
+```swift
+
+let approximateCount = 32;
+let countedThings = "moons orbiting Saturn"
+let naturalCount: String;
+
+switch approximateCount {
+    case 0:
+        naturalCount="No";
+    case 1..<5:
+        naturalCount="a few"
+    case 5..<12:
+    naturalCount="several"
+    case 12..<100:
+        naturalCount = "dozens of"
+    case 100..<1000:
+        naturalCount = "hundreds of"
+default:
+    naturalCount = "Many"
+}
+
+```
+
+---
+
+### Tuples
+
+- You can use tuples to test multiple values in the same switch statement.
+
+- sEach element of the tuple can be tested against a different value or interval of values.
+
+- use the underscore character (\_) ,_(the wildcard pattern)_,
+
+- to match any possible value.
+
+```swift
+
+let somePoint=(1,1);
+switch somePoint {
+case (0, 0):
+    print("\(somePoint) is at the origin")
+case (_, 0):
+    print("\(somePoint) is on the x-axis")
+case (0, _):
+    print("\(somePoint) is on the y-axis")
+case (-2...2, -2...2):
+    print("\(somePoint) is inside the box")
+default:
+    print("\(somePoint) is outside of the box")
+}
+
+```
+
+### Value Bindings
+
+- A switch case can name the value or values it matches to temporary constants or variables.
+
+- for use in the body of the case.
+
+- known as _value binding_,
+
+- because the values are bound to temporary constants or variables within the case’s body.
+
+```swift
+let anotherPoint = (2, 0)
+switch anotherPoint {
+case (let x, 0):
+    print("on the x-axis with an x value of \(x)")
+case (0, let y):
+    print("on the y-axis with a y value of \(y)")
+case let (x, y):
+    print("somewhere else at (\(x), \(y))")
+}
+```
+
+### Where
+
+- A switch case can use a where clause to check for additional conditions.
+
+```swift
+let yetAnotherPoint = (1, -1)
+switch yetAnotherPoint {
+case let (x, y) where x == y:
+    print("(\(x), \(y)) is on the line x == y")
+case let (x, y) where x == -y:
+    print("(\(x), \(y)) is on the line x == -y")
+case let (x, y):
+    print("(\(x), \(y)) is just some arbitrary point")
 }
 ```
