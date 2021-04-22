@@ -12,6 +12,11 @@
   - [Omitting Argument Labels](#omitting-argument-labels)
   - [Variadic Parameters](#variadic-parameters)
   - [In-Out Parameters](#in-out-parameters)
+  - [Nested Functions](#nested-functions)
+- [Closures](#closures)
+  - [Closure Expressions](#closure-expressions)
+  - [Inferring Type From Context](#inferring-type-from-context)
+- [Shorthand Argument Names](#shorthand-argument-names)
 
 ---
 
@@ -240,3 +245,129 @@ swapTwoInts(&someInt, &anotherInt);
 print("Someint is now \(someInt), and anotherInt is now \(anotherInt)");
 
 ```
+
+---
+
+### Nested Functions
+
+- functions inside the bodies of other functions, known as nested functions.
+
+- Nested functions are hidden from the outside world by default,
+
+- but can still be called and used by their enclosing function.
+
+```swift
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { return input + 1 }
+    func stepBackward(input: Int) -> Int { return input - 1 }
+    return backward ? stepBackward : stepForward
+}
+var currentValue = -4
+let moveNearerToZero = chooseStepFunction(backward: currentValue > 0)
+// moveNearerToZero now refers to the nested stepForward() function
+while currentValue != 0 {
+    print("\(currentValue)... ")
+    currentValue = moveNearerToZero(currentValue)
+}
+```
+
+---
+
+### Closures
+
+- Closures are self-contained blocks of functionality.
+
+- Can be passed around and used in your code.
+
+- Closures in Swift are similar to
+
+  - blocks in C and Objective-C
+  - lambdas in other programming languages.
+
+- Closures can capture and store references to any constants and variables
+
+- from the context in which they’re defined.
+
+- This is known as:
+  - closing over those constants and variables.
+- Swift handles all of the memory management of capturing for you.
+
+---
+
+#### Swift’s closure expressions
+
+- Inferring parameter and return value types from context
+
+- Implicit returns from single-expression closures
+
+- Shorthand argument names
+
+- Trailing closure syntax
+
+### Closure Expressions
+
+- Closure expressions are a way to write inline closures in a brief, focused syntax.
+
+#### The Sorted Method
+
+- The sorted(by:) method :
+
+- returns a new array of the same type and size as the old one,
+
+- with its elements in the correct sorted order.
+
+- The original array isn’t modified by the sorted(by:) method.
+
+```swift
+let names = ["Chris","Alex","Ewa","Barry","Daniella"];
+func backward(_ s1:String,_ s2:String)-> Bool{
+    return s1 > s2 ;
+}
+var reversedNames = names.sorted(by: backward(_:_:));
+print(reversedNames);
+```
+
+#### Closure Expression Syntax
+
+```shell
+{
+    (parameters) -> return type in
+    statements
+}
+```
+
+- a closure expression version of the backward(_:_:) function
+
+```swift
+reversedNames = names.sorted(by:
+    {
+        (s1: String, s2: String) -> Bool in
+        return s1 > s2
+    }
+);
+```
+
+---
+
+### Inferring Type From Context
+
+- Swift can infer the types of its parameters and the type of the value it returns.
+
+```shell
+reversedNames =
+names.sorted(by: { s1, s2 in return s1 > s2 } )
+```
+
+- Implicit Returns from Single-Expression Closures
+
+- Single-expression closures can implicitly return the result
+
+- by omitting the return keyword from their declaration.
+
+```swift
+reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
+```
+
+---
+
+### Shorthand Argument Names
