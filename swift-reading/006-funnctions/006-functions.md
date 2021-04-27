@@ -16,7 +16,11 @@
 - [Closures](#closures)
   - [Closure Expressions](#closure-expressions)
   - [Inferring Type From Context](#inferring-type-from-context)
-- [Shorthand Argument Names](#shorthand-argument-names)
+  - [Shorthand Argument Names](#shorthand-argument-names)
+  - [Operator Methods](#operator-methods)
+- [Trailing Closures](#trailing-closures)
+- [Closures Are Reference Types](#closures-are-reference-types)
+- [Escaping Closures](#escaping-closures)
 
 ---
 
@@ -371,3 +375,137 @@ reversedNames = names.sorted(by: { s1, s2 in s1 > s2 } )
 ---
 
 ### Shorthand Argument Names
+
+- Swift provides shorthand argument names to inline closures,
+
+- which can be used to refer to the values of the closure’s arguments by the names $0, $1, $2, and so on.
+
+- by using ,sit omit the closure’s argument list from its definition.
+
+- The in keyword can also be omitted.
+
+```js
+reversedNames = names.sorted(by: {$0>$1});
+```
+
+---
+
+### Operator Methods
+
+- shorter way to write the closure expression.
+- opertor (>) as a method that has tow params of types String.
+
+```swift
+var operatorMethods = names.sorted(by: >);
+```
+
+---
+
+### Trailing Closures
+
+- When you use the trailing closure syntax.
+
+- No need to write the argument label for the first closure as part of the function call.
+
+- A function call can include multiple trailing closures.
+
+  ```swift
+  func someFunctionThatTakesAClosure(closure: () -> Void) {
+      // function body goes here
+  }
+
+  // without using a trailing closure:
+  someFunctionThatTakesAClosure(closure: {
+  // closure's body goes here
+  })
+
+  // with a trailing closure instead:
+  someFunctionThatTakesAClosure() {
+  // trailing closure's body goes here
+  }
+  ```
+
+#### exmaple
+
+- If a closure expression is provided
+- as the function’s only argument and
+- you provide that expression as a trailing closure.
+
+```swift
+var trailingClosure = names.sorted(){$0>$1};
+```
+
+---
+
+- the map(\_:) method with a trailing closure to convert an array of Int values into an array of String values.
+
+```swift
+let digitNames = [
+    0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+    5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+]
+let numbers = [16, 58, 510]
+let strings = numbers.map{
+    // return type is String.
+    (number)-> String in
+    var number = number;
+    var output = "";
+
+    repeat{
+        output = digitNames[number % 10]! + output
+        number /= 10
+
+    }while number>0
+        return output;
+}
+```
+
+---
+
+### Capturing Values
+
+- A closure can capture constants and variables from the surrounding context in which it’s defined.
+
+```swift
+func makeIncrementer(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementer() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementer
+}
+```
+
+- The return type of makeIncrementer is () -> Int.
+
+- This means that it returns a function, rather than a simple value.
+
+Example of makeIncrementer in action:
+
+```swift
+let incrementByTen = makeIncrementer(forIncrement: 10);
+    incrementByTen();
+    incrementByTen();
+    incrementByTen();
+```
+
+---
+
+### Closures Are Reference Types
+
+- In the example above,
+
+- incrementBySeven and incrementByTen are constants
+
+- these constants refer to are still able to increment the runningTotal variables that they have captured.
+
+- This is because functions and closures are reference types.
+
+- Whenever you assign a function or a closure to a constant or a variable,
+
+- it is setting that constant or variable to be a reference to the function or closure.
+
+- assign a closure to two different constants or variables, both of those constants or variables refer to the same closure.
+
+### Escaping Closures
