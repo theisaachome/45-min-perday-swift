@@ -33,3 +33,21 @@ let vga = Resolution(width: 640, height: 480);
 
 let hd = Resolution(width: 1920, height: 1080);
 var cinema = hd;
+
+
+let tenEighty = VideoMode();
+tenEighty.resolution = hd;
+tenEighty.interlaced = true;
+tenEighty.name = "1080i";
+tenEighty.frameRate = 25.0;
+
+
+let alsoTenEighty = tenEighty;
+alsoTenEighty.frameRate = 30;
+
+print("The FrameRate property of tenEntity is now \(alsoTenEighty.frameRate)")
+
+
+if alsoTenEighty === tenEighty {
+    print("tenEntity and alsoTenEighty refer to the same VideoMode")
+}

@@ -7,6 +7,8 @@
 - [Instances](#instances)
 - [Memberwise Initializers](#Memberwise-Initializers)
 - [Strucutre and Enumerations Are Value Types](#Strucutre-and-Enumerations-Are-Value-Types)
+- [Classes Are Reference Types](#Classes-Are-Reference-Types)
+- [Identity Operators](#Identity-Operators)
 
 ### Structures and Classes
 
@@ -170,3 +172,84 @@ var cinema = hd;
 - Even though hd and cinema now have the same width and height,
 
 - they’re two completely different instances behind the scenes.
+
+```swift
+var cinema.width = 2048;
+print("cinema is now \(cinema.width) pixels wide").
+```
+
+- the width property of the original hd instance still has the old value of 1920:
+
+- The end result was two completely separate instances that contained the same numeric values.
+
+![](structure.png)
+
+---
+
+```swift
+enum CompassPoint {
+    case north, south, east, west
+    mutating func turnNorth() {
+        self = .north
+    }
+}
+var currentDirection = CompassPoint.west
+let rememberedDirection = currentDirection
+currentDirection.turnNorth()
+
+print("The current direction is \(currentDirection)")
+print("The remembered direction is \(rememberedDirection)")
+```
+
+---
+
+### Classes Are Reference Types
+
+- reference types are not copied
+
+- when they’re assigned to a variable or constant, or
+
+- when they’re passed to a function.
+
+- a reference to the same existing instance is used
+
+```swift
+let tenEighty = VideoMode();
+tenEighty.resolution = hd;
+tenEighty.interlaced = true;
+tenEighty.name = "1080i";
+tenEighty.frameRate = 25.0;
+```
+
+```swift
+let alsoTenEighty = tenEighty;
+alsoTenEighty.frameRate = 30;
+```
+
+- tenEighty and alsoTenEighty both refer to the same VideoMode instance.
+- two different names for the same single instance,
+- as shown in the figure below:
+
+![](class.png)
+
+- Note:
+  - they are declared as constants, rather than variables.
+  - can still change tenEighty.frameRate and alsoTenEighty.frameRate
+  - the values of the tenEighty and alsoTenEighty constants themselves don’t actually change.
+  - tenEighty and alsoTenEighty themselves don’t “store” the VideoMode instance—instead,
+  - they both refer to a VideoMode instance behind the scenes.
+    It’s the frameRate property of the VideoMode that’s changed,
+  - not the values of the constant references to that VideoMode.
+
+---
+
+### Identity Operators
+
+- classes are reference types,
+- multiple constants and variables to refer to the same single instance of a class.
+- find out whether two constants or variables refer to exactly the same instance of a class.
+
+#### Two identity operators:
+
+- Identical to (===)
+- Not identical to (!==)
